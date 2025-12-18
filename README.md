@@ -9,4 +9,4 @@
 3. Run the app:
    `npm run dev`
 
-**Deployment Link:** https://afterglow-ai.vercel.app/
+**Deployment Link:** https://afterglow-vert.vercel.app/
