@@ -42,7 +42,7 @@ export const Pipeline: React.FC<PipelineProps> = ({ matches, attendees }) => {
   };
 
   return (
-    <div className="flex h-[calc(100vh-4rem)] gap-6">
+    <div className="flex h-[calc(100vh-4rem)] gap-0 md:gap-6 relative">
       {/* Table Section */}
       <div className="flex-1 bg-white rounded-xl border border-brand-200 shadow-sm overflow-hidden flex flex-col">
         <div className="p-4 border-b border-brand-100 flex justify-between items-center bg-gray-50/50">
@@ -55,11 +55,11 @@ export const Pipeline: React.FC<PipelineProps> = ({ matches, attendees }) => {
           <table className="w-full text-left text-sm">
             <thead className="bg-brand-50/50 sticky top-0 z-10">
               <tr className="text-brand-500 font-medium border-b border-brand-200">
-                <th className="px-6 py-3 w-1/3">Pair</th>
-                <th className="px-6 py-3">Status</th>
-                <th className="px-6 py-3">Last Activity</th>
-                <th className="px-6 py-3">Confidence</th>
-                <th className="px-6 py-3 text-right">Action</th>
+                <th className="px-4 md:px-6 py-3 w-1/2 md:w-1/3">Pair</th>
+                <th className="px-4 md:px-6 py-3">Status</th>
+                <th className="px-6 py-3 hidden lg:table-cell">Last Activity</th>
+                <th className="px-6 py-3 hidden md:table-cell">Confidence</th>
+                <th className="px-4 md:px-6 py-3 text-right">Action</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-brand-100">
@@ -69,39 +69,39 @@ export const Pipeline: React.FC<PipelineProps> = ({ matches, attendees }) => {
                 if (!source || !target) return null;
 
                 return (
-                  <tr 
-                    key={match.id} 
+                  <tr
+                    key={match.id}
                     onClick={() => setSelectedMatch(match)}
                     className="hover:bg-brand-50 cursor-pointer transition-colors group"
                   >
-                    <td className="px-6 py-3">
+                    <td className="px-4 md:px-6 py-3">
                       <div className="flex items-center gap-3">
-                        <div className="flex -space-x-2">
+                        <div className="flex -space-x-2 shrink-0">
                           <img src={source.avatar} className="w-8 h-8 rounded-full border-2 border-white" alt="" />
                           <img src={target.avatar} className="w-8 h-8 rounded-full border-2 border-white" alt="" />
                         </div>
-                        <div>
-                          <div className="font-medium text-brand-900">{source.name} & {target.name}</div>
-                          <div className="text-xs text-brand-500">{source.company} • {target.company}</div>
+                        <div className="min-w-0">
+                          <div className="font-medium text-brand-900 truncate">{source.name} & {target.name}</div>
+                          <div className="text-xs text-brand-500 truncate">{source.company} • {target.company}</div>
                         </div>
                       </div>
                     </td>
-                    <td className="px-6 py-3">
+                    <td className="px-4 md:px-6 py-3">
                       <StatusBadge status={match.status} />
                     </td>
-                    <td className="px-6 py-3 text-brand-600 font-mono text-xs">
+                    <td className="px-6 py-3 text-brand-600 font-mono text-xs hidden lg:table-cell">
                       {new Date(match.lastActivity).toLocaleDateString()}
                     </td>
-                    <td className="px-6 py-3">
-                       <div className="w-full bg-brand-100 rounded-full h-1.5 w-24">
-                          <div 
-                            className={`h-1.5 rounded-full ${match.confidenceScore > 80 ? 'bg-emerald-500' : 'bg-amber-400'}`} 
-                            style={{ width: `${match.confidenceScore}%` }}
-                          />
-                       </div>
+                    <td className="px-6 py-3 hidden md:table-cell">
+                      <div className="w-full bg-brand-100 rounded-full h-1.5 w-24">
+                        <div
+                          className={`h-1.5 rounded-full ${match.confidenceScore > 80 ? 'bg-emerald-500' : 'bg-amber-400'}`}
+                          style={{ width: `${match.confidenceScore}%` }}
+                        />
+                      </div>
                     </td>
-                    <td className="px-6 py-3 text-right">
-                       <ChevronRight className="w-4 h-4 text-brand-300 ml-auto group-hover:text-brand-600" />
+                    <td className="px-4 md:px-6 py-3 text-right">
+                      <ChevronRight className="w-4 h-4 text-brand-300 ml-auto group-hover:text-brand-600" />
                     </td>
                   </tr>
                 );
@@ -113,15 +113,15 @@ export const Pipeline: React.FC<PipelineProps> = ({ matches, attendees }) => {
 
       {/* Drawer Section */}
       {selectedMatch && (
-        <div className="w-96 bg-white border-l border-brand-200 shadow-xl flex flex-col animate-in slide-in-from-right duration-300 absolute right-0 top-0 h-full z-20">
+        <div className="w-full md:w-96 bg-white border-l border-brand-200 shadow-xl flex flex-col animate-in slide-in-from-right duration-300 absolute right-0 top-0 h-full z-20 pb-20 md:pb-0">
           <div className="p-6 border-b border-brand-100 flex justify-between items-start bg-brand-50/30">
             <div>
               <h3 className="font-semibold text-lg text-brand-900">Match Details</h3>
               <p className="text-sm text-brand-500 font-mono mt-1">{selectedMatch.id}</p>
             </div>
-            <button onClick={() => setSelectedMatch(null)} className="text-brand-400 hover:text-brand-900">×</button>
+            <button onClick={() => setSelectedMatch(null)} className="text-brand-400 hover:text-brand-900 text-2xl leading-none">&times;</button>
           </div>
-          
+
           <div className="flex-1 overflow-auto p-6 space-y-6">
             {/* Timeline */}
             <section>
@@ -137,47 +137,47 @@ export const Pipeline: React.FC<PipelineProps> = ({ matches, attendees }) => {
               </div>
             </section>
 
-             {/* AI Nudge */}
-             <section className="bg-indigo-50/50 rounded-lg p-4 border border-indigo-100">
-               <div className="flex items-center justify-between mb-3">
-                 <h4 className="text-xs font-bold text-indigo-900 uppercase tracking-wider flex items-center gap-1">
-                   <Wand2 size={12} /> AI Nudge
-                 </h4>
-               </div>
-               
-               {!nudgeDraft ? (
-                 <button 
+            {/* AI Nudge */}
+            <section className="bg-indigo-50/50 rounded-lg p-4 border border-indigo-100">
+              <div className="flex items-center justify-between mb-3">
+                <h4 className="text-xs font-bold text-indigo-900 uppercase tracking-wider flex items-center gap-1">
+                  <Wand2 size={12} /> AI Nudge
+                </h4>
+              </div>
+
+              {!nudgeDraft ? (
+                <button
                   onClick={handleGenerateNudge}
                   disabled={loadingNudge}
                   className="w-full py-2 bg-white border border-indigo-200 text-indigo-600 rounded-md text-sm font-medium hover:bg-indigo-50 transition-all shadow-sm"
-                 >
-                   {loadingNudge ? 'Genering...' : 'Generate Follow-up Draft'}
-                 </button>
-               ) : (
-                 <div className="space-y-2">
-                   <textarea 
+                >
+                  {loadingNudge ? 'Generating...' : 'Generate Follow-up Draft'}
+                </button>
+              ) : (
+                <div className="space-y-2">
+                  <textarea
                     className="w-full text-sm p-3 bg-white border border-indigo-200 rounded-md text-brand-700 resize-none focus:ring-2 focus:ring-indigo-500 outline-none"
                     rows={4}
                     value={nudgeDraft}
                     readOnly
-                   />
-                   <div className="flex gap-2">
-                      <button 
-                        onClick={() => { navigator.clipboard.writeText(nudgeDraft); setNudgeDraft('') }}
-                        className="flex-1 py-1.5 bg-indigo-600 text-white rounded text-xs font-medium hover:bg-indigo-700"
-                      >
-                        Copy
-                      </button>
-                      <button 
-                        onClick={() => setNudgeDraft('')}
-                        className="px-3 py-1.5 text-brand-500 text-xs hover:text-brand-900"
-                      >
-                        Discard
-                      </button>
-                   </div>
-                 </div>
-               )}
-             </section>
+                  />
+                  <div className="flex gap-2">
+                    <button
+                      onClick={() => { navigator.clipboard.writeText(nudgeDraft); setNudgeDraft('') }}
+                      className="flex-1 py-1.5 bg-indigo-600 text-white rounded text-xs font-medium hover:bg-indigo-700"
+                    >
+                      Copy
+                    </button>
+                    <button
+                      onClick={() => setNudgeDraft('')}
+                      className="px-3 py-1.5 text-brand-500 text-xs hover:text-brand-900"
+                    >
+                      Discard
+                    </button>
+                  </div>
+                </div>
+              )}
+            </section>
           </div>
         </div>
       )}

@@ -12,7 +12,7 @@ interface NetworkGraphProps {
 export const NetworkGraph: React.FC<NetworkGraphProps> = ({ attendees, matches }) => {
   const svgRef = useRef<SVGSVGElement>(null);
   const wrapperRef = useRef<HTMLDivElement>(null);
-  const [insights, setInsights] = useState<{summary: string, suggestions: string[]} | null>(null);
+  const [insights, setInsights] = useState<{ summary: string, suggestions: string[] } | null>(null);
   const [loadingInsights, setLoadingInsights] = useState(false);
 
   useEffect(() => {
@@ -55,10 +55,10 @@ export const NetworkGraph: React.FC<NetworkGraphProps> = ({ attendees, matches }
 
     // Add zoom
     const zoom = d3.zoom<SVGSVGElement, unknown>()
-        .scaleExtent([0.1, 4])
-        .on("zoom", (event) => {
-            g.attr("transform", event.transform);
-        });
+      .scaleExtent([0.1, 4])
+      .on("zoom", (event) => {
+        g.attr("transform", event.transform);
+      });
 
     svg.call(zoom);
 
@@ -121,90 +121,90 @@ export const NetworkGraph: React.FC<NetworkGraphProps> = ({ attendees, matches }
   }, [attendees, matches]);
 
   const fetchInsights = async () => {
-      setLoadingInsights(true);
-      const connectors = attendees.slice(0, 3).map(a => a.name); // Mock top connectors for demo logic
-      const data = await getGraphInsights(attendees.length, matches.length, connectors);
-      setInsights({ 
-          summary: data.summary || "Network shows healthy distributed clusters.", 
-          suggestions: data.suggestions || [] 
-      });
-      setLoadingInsights(false);
+    setLoadingInsights(true);
+    const connectors = attendees.slice(0, 3).map(a => a.name); // Mock top connectors for demo logic
+    const data = await getGraphInsights(attendees.length, matches.length, connectors);
+    setInsights({
+      summary: data.summary || "Network shows healthy distributed clusters.",
+      suggestions: data.suggestions || []
+    });
+    setLoadingInsights(false);
   }
 
   return (
-    <div className="flex h-[calc(100vh-8rem)] gap-6">
-      <div ref={wrapperRef} className="flex-1 bg-white rounded-xl border border-brand-200 shadow-sm relative overflow-hidden">
+    <div className="flex flex-col lg:flex-row h-auto lg:h-[calc(100vh-8rem)] gap-6">
+      <div ref={wrapperRef} className="flex-1 bg-white rounded-xl border border-brand-200 shadow-sm relative overflow-hidden min-h-[400px] lg:min-h-0">
         <svg ref={svgRef} className="w-full h-full cursor-grab active:cursor-grabbing"></svg>
-        
+
         <div className="absolute top-4 left-4 bg-white/90 backdrop-blur p-3 rounded-lg border border-brand-200 shadow-sm">
           <h3 className="text-sm font-semibold text-brand-900">Network Topology</h3>
-          <div className="flex items-center gap-2 mt-2 text-xs text-brand-500">
-             <span className="w-2 h-2 rounded-full bg-blue-500"></span> Founder
-             <span className="w-2 h-2 rounded-full bg-orange-500"></span> Investor
-             <span className="w-2 h-2 rounded-full bg-green-500"></span> Operator
+          <div className="flex flex-wrap items-center gap-2 mt-2 text-xs text-brand-500">
+            <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-blue-500"></span> Founder</span>
+            <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-orange-500"></span> Investor</span>
+            <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-green-500"></span> Operator</span>
           </div>
         </div>
 
         <div className="absolute bottom-4 right-4 flex flex-col gap-2">
-           <button className="p-2 bg-white border border-brand-200 rounded shadow-sm hover:bg-gray-50"><ZoomIn size={16} /></button>
-           <button className="p-2 bg-white border border-brand-200 rounded shadow-sm hover:bg-gray-50"><ZoomOut size={16} /></button>
+          <button className="p-2 bg-white border border-brand-200 rounded shadow-sm hover:bg-gray-50"><ZoomIn size={16} /></button>
+          <button className="p-2 bg-white border border-brand-200 rounded shadow-sm hover:bg-gray-50"><ZoomOut size={16} /></button>
         </div>
       </div>
 
-      <div className="w-80 flex flex-col gap-4">
-          <div className="bg-gradient-to-br from-indigo-600 to-purple-700 text-white rounded-xl p-6 shadow-lg">
-             <div className="flex items-center gap-2 mb-4 opacity-90">
-                <Info size={18} />
-                <h3 className="font-semibold">Graph Insights</h3>
-             </div>
-             
-             {loadingInsights ? (
-                 <div className="animate-pulse space-y-3">
-                     <div className="h-4 bg-white/20 rounded w-3/4"></div>
-                     <div className="h-20 bg-white/20 rounded"></div>
-                 </div>
-             ) : insights ? (
-                 <div className="space-y-4">
-                     <p className="text-sm leading-relaxed opacity-95 font-medium">{insights.summary}</p>
-                     <div className="space-y-2 mt-4">
-                         <p className="text-xs uppercase tracking-wider opacity-70 font-bold">Suggested Actions</p>
-                         <ul className="space-y-2">
-                             {insights.suggestions.map((s, i) => (
-                                 <li key={i} className="text-xs bg-white/10 p-2 rounded border border-white/10 leading-snug">
-                                     {s}
-                                 </li>
-                             ))}
-                         </ul>
-                     </div>
-                 </div>
-             ) : (
-                 <div className="text-center py-6">
-                     <p className="text-sm opacity-80 mb-4">Analyze the network structure to find bottlenecks and opportunities.</p>
-                     <button 
-                        onClick={fetchInsights}
-                        className="w-full py-2 bg-white text-indigo-700 font-medium text-sm rounded hover:bg-indigo-50 transition-colors"
-                     >
-                         Run Analysis
-                     </button>
-                 </div>
-             )}
+      <div className="w-full lg:w-80 flex flex-col gap-4">
+        <div className="bg-gradient-to-br from-indigo-600 to-purple-700 text-white rounded-xl p-6 shadow-lg">
+          <div className="flex items-center gap-2 mb-4 opacity-90">
+            <Info size={18} />
+            <h3 className="font-semibold">Graph Insights</h3>
           </div>
 
-          <div className="bg-white rounded-xl border border-brand-200 p-4 shadow-sm flex-1">
-             <h4 className="text-sm font-semibold text-brand-900 mb-3">Top Connectors</h4>
-             <div className="space-y-3">
-                 {attendees.slice(0, 5).map((a, i) => (
-                     <div key={a.id} className="flex items-center justify-between group cursor-pointer p-1 hover:bg-gray-50 rounded">
-                         <div className="flex items-center gap-2">
-                             <span className="text-xs text-brand-400 font-mono w-4">{i+1}</span>
-                             <img src={a.avatar} className="w-6 h-6 rounded-full" alt=""/>
-                             <span className="text-sm text-brand-700 font-medium">{a.name}</span>
-                         </div>
-                         <div className="text-xs text-brand-400">{Math.floor(Math.random() * 20) + 5} cons</div>
-                     </div>
-                 ))}
-             </div>
+          {loadingInsights ? (
+            <div className="animate-pulse space-y-3">
+              <div className="h-4 bg-white/20 rounded w-3/4"></div>
+              <div className="h-20 bg-white/20 rounded"></div>
+            </div>
+          ) : insights ? (
+            <div className="space-y-4">
+              <p className="text-sm leading-relaxed opacity-95 font-medium">{insights.summary}</p>
+              <div className="space-y-2 mt-4">
+                <p className="text-xs uppercase tracking-wider opacity-70 font-bold">Suggested Actions</p>
+                <ul className="space-y-2">
+                  {insights.suggestions.map((s, i) => (
+                    <li key={i} className="text-xs bg-white/10 p-2 rounded border border-white/10 leading-snug">
+                      {s}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          ) : (
+            <div className="text-center py-6">
+              <p className="text-sm opacity-80 mb-4">Analyze the network structure to find bottlenecks and opportunities.</p>
+              <button
+                onClick={fetchInsights}
+                className="w-full py-2 bg-white text-indigo-700 font-medium text-sm rounded hover:bg-indigo-50 transition-colors"
+              >
+                Run Analysis
+              </button>
+            </div>
+          )}
+        </div>
+
+        <div className="bg-white rounded-xl border border-brand-200 p-4 shadow-sm flex-1">
+          <h4 className="text-sm font-semibold text-brand-900 mb-3">Top Connectors</h4>
+          <div className="space-y-3">
+            {attendees.slice(0, 5).map((a, i) => (
+              <div key={a.id} className="flex items-center justify-between group cursor-pointer p-1 hover:bg-gray-50 rounded">
+                <div className="flex items-center gap-2">
+                  <span className="text-xs text-brand-400 font-mono w-4">{i + 1}</span>
+                  <img src={a.avatar} className="w-6 h-6 rounded-full" alt="" />
+                  <span className="text-sm text-brand-700 font-medium">{a.name}</span>
+                </div>
+                <div className="text-xs text-brand-400">{Math.floor(Math.random() * 20) + 5} cons</div>
+              </div>
+            ))}
           </div>
+        </div>
       </div>
     </div>
   );

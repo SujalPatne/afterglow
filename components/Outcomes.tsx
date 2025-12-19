@@ -22,7 +22,7 @@ export const Outcomes: React.FC = () => {
           <h2 className="text-xl font-bold text-brand-900">Log Outcome</h2>
           <p className="text-sm text-brand-500 mt-1">Manually track success metrics from meetings held.</p>
         </div>
-        
+
         <div className="p-6 space-y-6">
           <div className="space-y-2">
             <label className="text-sm font-medium text-brand-700">Meeting Notes (Raw)</label>
@@ -33,13 +33,13 @@ export const Outcomes: React.FC = () => {
               onChange={(e) => setNotes(e.target.value)}
             />
             <div className="flex justify-end">
-              <button 
+              <button
                 onClick={handleAnalyze}
                 disabled={!notes || analyzing}
                 className="flex items-center gap-2 px-4 py-2 bg-indigo-600 text-white text-sm font-medium rounded-lg hover:bg-indigo-700 disabled:opacity-50 transition-all"
               >
                 {analyzing ? (
-                   <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+                  <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
                 ) : <Sparkles size={16} />}
                 Auto-Analyze with AI
               </button>
@@ -49,40 +49,40 @@ export const Outcomes: React.FC = () => {
           {structuredData && (
             <div className="bg-indigo-50 rounded-lg p-5 border border-indigo-100 animate-in fade-in slide-in-from-bottom-2">
               <h3 className="text-sm font-bold text-indigo-900 mb-4 uppercase tracking-wide">Extracted Data</h3>
-              
-              <div className="grid grid-cols-2 gap-4">
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                   <label className="text-xs text-indigo-500 font-semibold">Outcome Type</label>
-                   <div className="mt-1 px-3 py-2 bg-white rounded border border-indigo-200 text-brand-800 text-sm font-medium shadow-sm">
-                      {structuredData.type}
-                   </div>
+                  <label className="text-xs text-indigo-500 font-semibold">Outcome Type</label>
+                  <div className="mt-1 px-3 py-2 bg-white rounded border border-indigo-200 text-brand-800 text-sm font-medium shadow-sm">
+                    {structuredData.type}
+                  </div>
                 </div>
                 <div>
-                   <label className="text-xs text-indigo-500 font-semibold">Sentiment</label>
-                   <div className="mt-1 px-3 py-2 bg-white rounded border border-indigo-200 text-brand-800 text-sm font-medium shadow-sm flex items-center gap-2">
-                      <span className={`w-2 h-2 rounded-full ${structuredData.sentiment === 'Positive' ? 'bg-emerald-500' : 'bg-gray-400'}`}></span>
-                      {structuredData.sentiment}
-                   </div>
+                  <label className="text-xs text-indigo-500 font-semibold">Sentiment</label>
+                  <div className="mt-1 px-3 py-2 bg-white rounded border border-indigo-200 text-brand-800 text-sm font-medium shadow-sm flex items-center gap-2">
+                    <span className={`w-2 h-2 rounded-full ${structuredData.sentiment === 'Positive' ? 'bg-emerald-500' : 'bg-gray-400'}`}></span>
+                    {structuredData.sentiment}
+                  </div>
                 </div>
                 <div className="col-span-2">
-                   <label className="text-xs text-indigo-500 font-semibold">Suggested Next Step</label>
-                   <div className="mt-1 px-3 py-2 bg-white rounded border border-indigo-200 text-brand-800 text-sm font-medium shadow-sm flex items-start gap-2">
-                      <Clock size={16} className="text-indigo-400 mt-0.5" />
-                      {structuredData.nextStep}
-                   </div>
+                  <label className="text-xs text-indigo-500 font-semibold">Suggested Next Step</label>
+                  <div className="mt-1 px-3 py-2 bg-white rounded border border-indigo-200 text-brand-800 text-sm font-medium shadow-sm flex items-start gap-2">
+                    <Clock size={16} className="text-indigo-400 mt-0.5" />
+                    {structuredData.nextStep}
+                  </div>
                 </div>
               </div>
 
               <div className="mt-6 flex gap-3">
-                 <button className="flex-1 py-2 bg-indigo-600 text-white rounded-lg text-sm font-medium hover:bg-indigo-700 flex justify-center items-center gap-2">
-                    <Save size={16}/> Save Outcome
-                 </button>
-                 <button 
-                   onClick={() => setStructuredData(null)}
-                   className="px-4 py-2 bg-white text-brand-600 border border-brand-200 rounded-lg text-sm font-medium hover:bg-brand-50"
-                 >
-                    Discard
-                 </button>
+                <button className="flex-1 py-2 bg-indigo-600 text-white rounded-lg text-sm font-medium hover:bg-indigo-700 flex justify-center items-center gap-2">
+                  <Save size={16} /> Save Outcome
+                </button>
+                <button
+                  onClick={() => setStructuredData(null)}
+                  className="px-4 py-2 bg-white text-brand-600 border border-brand-200 rounded-lg text-sm font-medium hover:bg-brand-50"
+                >
+                  Discard
+                </button>
               </div>
             </div>
           )}
