@@ -1,5 +1,5 @@
 import React from 'react';
-import { LayoutDashboard, Network, GitPullRequest, Settings, CheckCircle } from 'lucide-react';
+import { LayoutDashboard, Network, GitPullRequest, Settings, CheckCircle, Github } from 'lucide-react';
 
 interface LayoutProps {
   currentView: string;
@@ -53,7 +53,16 @@ export const Layout: React.FC<LayoutProps> = ({ currentView, onNavigate, childre
           <NavItem icon={CheckCircle} label="Outcomes" id="outcomes" active={currentView === 'outcomes'} onClick={onNavigate} />
         </nav>
 
-        <div className="p-4 border-t border-brand-100">
+        <div className="p-4 border-t border-brand-100 space-y-2">
+          <a
+            href="https://github.com/SujalPatne/afterglow.git"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-full flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium text-brand-500 hover:bg-brand-100 hover:text-brand-900 transition-colors"
+          >
+            <Github size={18} className="shrink-0" />
+            <span>Source Code</span>
+          </a>
           <NavItem icon={Settings} label="Settings" id="settings" active={currentView === 'settings'} onClick={onNavigate} />
           <div className="mt-4 px-3">
             <div className="text-xs font-mono text-brand-300">v1.2.0 • Pro</div>
@@ -67,12 +76,22 @@ export const Layout: React.FC<LayoutProps> = ({ currentView, onNavigate, childre
           <div className="w-6 h-6 rounded bg-indigo-600"></div>
           <span className="text-lg font-bold text-brand-900 tracking-tight">Afterglow</span>
         </div>
-        <button
-          onClick={() => onNavigate('settings')}
-          className={`p-2 rounded-full ${currentView === 'settings' ? 'bg-brand-100 text-brand-900' : 'text-brand-400'}`}
-        >
-          <Settings size={20} />
-        </button>
+        <div className="flex items-center gap-2">
+          <a
+            href="https://github.com/SujalPatne/afterglow.git"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="p-2 text-brand-400 hover:text-brand-900 transition-colors"
+          >
+            <Github size={20} />
+          </a>
+          <button
+            onClick={() => onNavigate('settings')}
+            className={`p-2 rounded-full ${currentView === 'settings' ? 'bg-brand-100 text-brand-900' : 'text-brand-400'}`}
+          >
+            <Settings size={20} />
+          </button>
+        </div>
       </header>
 
       {/* Main Content */}
